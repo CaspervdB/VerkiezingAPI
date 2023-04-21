@@ -1,0 +1,12 @@
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="Election">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ElectionName" type="xs:string"/>
+                <xs:element name="Municipality" type="xs:string"/>
+                <xs:element name="Date" type="xs:date"/>
+                <xs:element name="Votes" type="xs:integer"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
