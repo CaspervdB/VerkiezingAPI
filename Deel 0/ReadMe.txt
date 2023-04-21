@@ -1,12 +1,12 @@
 Deel 0 Dataprocessing Casper van den Berg 4580125
 
-Als dataset heb ik gekozen voor informatie over gekentekende voertuigen van de RDW.
+Als dataset heb ik gekozen voor informatie over de verkiezingsuitslagen van de gemeenteraad van Emmen in de jaren 2022, 2018 en 2014
 De tabelen die ik heb gekozen zijn:
 Verkiezingsuitslagen Gemeenteraad 2022
-Verkiezingsuitslag Provinciale Staten 2019
-Verkiezingsuitslag Tweede Kamer 2021
+Verkiezingsuitslagen Gemeenteraad 2018
+Verkiezingsuitslagen Gemeenteraad 2014
 
 Als je wil kan je ze downloaden van de volgende links:
 https://data.overheid.nl/dataset/verkiezingsuitslagen-gemeenteraad-2022
-https://data.overheid.nl/dataset/verkiezingsuitslag-provinciale-staten-2019#panel-resources
-https://data.overheid.nl/dataset/verkiezingsuitslag-tweede-kamer-2021#panel-resources
+https://data.overheid.nl/dataset/verkiezingsuitslagen-gemeenteraad-2018
+https://data.overheid.nl/dataset/verkiezingsuitslagen-gemeenteraad-2014
