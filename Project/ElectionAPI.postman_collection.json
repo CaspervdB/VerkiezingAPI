@@ -1,0 +1,451 @@
+{
+	"info": {
+		"_postman_id": "8d696aa1-e2fb-4a9a-af8a-dcb3f236e14f",
+		"name": "ElectionAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11780428",
+		"_collection_link": "https://grey-comet-147707.postman.co/workspace/daniel~c60db35f-f532-4463-a8e8-25992e31472d/collection/11780428-8d696aa1-e2fb-4a9a-af8a-dcb3f236e14f?action=share&creator=11780428&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "getElection",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/elections",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"elections"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getParticipations",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/participations",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"participations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getpartys",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/partys",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"partys"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getElection by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/elections/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"elections",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getParticipationsby id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/participations/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"participations",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getPartys by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/partys/9f003b44-755c-43a2-afd1-8cd49d4c5a1e",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"partys",
+						"9f003b44-755c-43a2-afd1-8cd49d4c5a1e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createElection XML",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n<Election>\r\n    <ElectionName>GR22</ElectionName>\r\n    <Municipality>Emmen</Municipality>\r\n    <Date>2023-04-21</Date>\r\n    <Votes>60</Votes>\r\n</Election>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/elections",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"elections"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createParticipations XML",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "<Election>\r\n    <ElectionName>GR22</ElectionName>\r\n    <Municipality>Emmen</Municipality>\r\n    <Date>21-04-2023</Date>\r\n    <Votes>60</Votes>\r\n</Election>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/participations",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"participations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createPartys XML",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "<Party>\r\n    <PartyName>Emmen</PartyName>\r\n</Party>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/partys",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"partys"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createElection JSON",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"GR22\",\r\n    \"municipality\": \"Emmen\",\r\n    \"date\": \"21-04-2023\",\r\n    \"votes\": 60    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/elections",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"elections"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createParticipations JSON",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"GR22\",\r\n    \"municipality\": \"Emmen\",\r\n    \"date\": \"21-04-2023\",\r\n    \"votes\": 60    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/participations",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"participations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createPartys JSON",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"CDA\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/partys",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"partys"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateElection JSON",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/elections",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"elections"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateParticipations JSON",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/participations",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"participations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updatePartys JSON",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/partys",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"partys"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateElection XML",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/elections",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"elections"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateparticipations XML",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/participations",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"participations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updatePartys XML",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/partys",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"partys"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteElection",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/elections",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"elections"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteParty",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/partys",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"partys"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteParticipation",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/participations",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"participations"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000"
+		}
+	]
+}

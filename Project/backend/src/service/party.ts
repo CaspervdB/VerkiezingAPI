@@ -2,7 +2,7 @@ import { MongoClient } from "mongodb";
 import { Party } from "../models/party";
 
 const dbName = "mydb";
-const url = "mongodb://root:example@localhost:27017/";
+const url = "mongodb://root:password@localhost:27017/?authSource=admin";
 
 export const dbGetPartys = async (): Promise<Party[]> => {
     const client = new MongoClient(url);

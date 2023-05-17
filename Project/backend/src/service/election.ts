@@ -2,7 +2,7 @@ import { MongoClient } from "mongodb";
 import { Election } from "../models/election";
 
 const dbName = "mydb";
-const url = "mongodb://root:example@localhost:27017/";
+const url = "mongodb://root:password@localhost:27017/?authSource=admin";
 
 export const dbGetElections = async (): Promise<Election[]> => {
     const client = new MongoClient(url);

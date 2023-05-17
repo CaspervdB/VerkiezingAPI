@@ -2,7 +2,7 @@ import { MongoClient } from "mongodb";
 import { Participation } from "../models/participation";
 
 const dbName = "mydb";
-const url = "mongodb://root:example@localhost:27017/";
+const url = "mongodb://root:password@localhost:27017/?authSource=admin";
 
 export const dbGetParticipations = async (): Promise<Participation[]> => {
     const client = new MongoClient(url);

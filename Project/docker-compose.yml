@@ -10,3 +10,23 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: example
     ports:
       - 27017:27017
+    volumes:
+      - type: volume
+        source: storedata
+        target: /data/db
+      - type: volume
+        source: mongo-configdb
+        target: /data/configdb
+volumes:
+  storedata:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: './storedata'
+  mongo-configdb:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: './mongo-configdb'
