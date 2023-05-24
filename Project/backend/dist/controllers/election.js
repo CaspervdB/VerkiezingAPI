@@ -13,9 +13,13 @@ exports.deleteElection = exports.updateElection = exports.createElection = expor
 const xml_validator_1 = require("../validators/xml-validator");
 const json_validator_1 = require("../validators/json-validator");
 const election_1 = require("../service/election");
+const xml_js_1 = require("xml-js");
 const validators = {
     "application/json": json_validator_1.jsonValidator,
     "application/xml": xml_validator_1.xmlValidator
+};
+const contentTypeIsJson = (req) => {
+    return req.headers['content-type'] === 'application/json';
 };
 const getElection = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
@@ -28,7 +32,12 @@ const getElection = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 });
 exports.getElection = getElection;
 const getElections = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.send(yield (0, election_1.dbGetElections)());
+    const allElections = yield (0, election_1.dbGetElections)();
+    if (contentTypeIsJson(req)) {
+        res.send(allElections);
+        return;
+    }
+    res.send((0, xml_js_1.json2xml)(JSON.stringify(allElections), { compact: true, spaces: 1 }));
 });
 exports.getElections = getElections;
 const createElection = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -42,7 +51,7 @@ const createElection = (req, res) => __awaiter(void 0, void 0, void 0, function*
     if (!validator)
         return res.status(400).send("Unsupported content type.");
     // Check if the data structure is valid.
-    var election = yield validator.validateElection(rawBody);
+    let election = yield validator.validateElection(rawBody);
     if (!election)
         return res.status(400).send("Invalid data structure.");
     election = yield (0, election_1.dbCreateElection)(election);

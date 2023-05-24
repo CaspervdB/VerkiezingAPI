@@ -4,6 +4,7 @@ import fs from "fs";
 import path from "path";
 
 import { Validator } from "./validator";
+import { ObjectId } from "mongodb";
 
 const schemesPath = path.join(__dirname, "..", "..", "resources", "schemes", "json")
 
@@ -13,7 +14,7 @@ export const jsonValidator: Validator = {
         const v = new jsonschema.Validator();
         const obj = JSON.parse(raw);
         if (!obj.id)
-            obj.id = uuid();
+            obj.id = new ObjectId();
         const scheme = JSON.parse(fs.readFileSync(schemesPath + "/election.json", "utf8"))
         const isValid = v.validate(obj, scheme).valid;
         if (!isValid)

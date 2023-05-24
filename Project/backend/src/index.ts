@@ -4,14 +4,27 @@ import bodyParser from "body-parser";
 import {createElection, deleteElection, getElection, getElections, updateElection} from "./controllers/election";
 import { createParty, deleteParty, getParty, getPartys, updateParty } from "./controllers/party";
 import { createParticipation, deleteParticipation, getParticipations, updateParticipation } from "./controllers/participations";
-
+const xmlparser = require('express-xml-bodyparser');
 const port = 3000;
 const app = express();
 
+// app.use(express.json());
+// app.use(xmlparser());
 app.use(bodyParser.raw({
-    type: "application/*",
+    type: ["application/json", "application/xml"], 
 }));
-
+app.use((req, res, next) => {
+    switch(req.headers['content-type'])
+    {
+        case "application/json":
+        case "application/xml":
+            next();
+            return;
+        default:
+            res.status(400).send("No content type specified.");
+            break;
+    }
+})
 // Routes for election.
 app.get("/elections", getElections);
 app.get("/elections/:id", getElection);

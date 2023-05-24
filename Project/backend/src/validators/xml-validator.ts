@@ -31,7 +31,7 @@ export const xmlValidator: Validator = {
             var scheme = xsd.parseFile(schemesPath + "/election.xsd");
             var errors = scheme.validate(raw);
             if (errors)
-                return null;
+                return ;
 
             const obj = await parse(raw);
             if (!obj)

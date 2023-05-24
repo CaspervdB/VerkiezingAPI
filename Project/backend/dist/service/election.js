@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.dbDeleteElection = exports.dbUpdateElection = exports.dbCreateElection = exports.dbGetElection = exports.dbGetElections = void 0;
 const mongodb_1 = require("mongodb");
 const dbName = "mydb";
-const url = "mongodb://root:example@localhost:27017/";
+const url = "mongodb://root:example@localhost:27017/?authSource=admin";
 const dbGetElections = () => __awaiter(void 0, void 0, void 0, function* () {
     const client = new mongodb_1.MongoClient(url);
     yield client.connect();
