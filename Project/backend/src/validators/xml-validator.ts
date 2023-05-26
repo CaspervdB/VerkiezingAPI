@@ -28,10 +28,10 @@ export const xmlValidator: Validator = {
     validateElection: async (raw: string) => {
 
         try {
-            var scheme = xsd.parseFile(schemesPath + "/election.xsd");
-            var errors = scheme.validate(raw);
+            let scheme = xsd.parseFile(schemesPath + "/election.xsd");
+            let errors = scheme.validate(raw);
             if (errors)
-                return ;
+                return null;
 
             const obj = await parse(raw);
             if (!obj)
@@ -60,8 +60,8 @@ export const xmlValidator: Validator = {
     validateParty: async (raw: string) => {
 
         try {
-            var scheme = xsd.parseFile(schemesPath + "/party.xsd");
-            var errors = scheme.validate(raw);
+            let scheme = xsd.parseFile(schemesPath + "/party.xsd");
+            let errors = scheme.validate(raw);
             if (errors)
                 return null;
 
@@ -89,8 +89,8 @@ export const xmlValidator: Validator = {
     validateParticipation: async (raw: string) => {
 
         try {
-            var scheme = xsd.parseFile(schemesPath + "/participation.xsd");
-            var errors = scheme.validate(raw);
+            let scheme = xsd.parseFile(schemesPath + "/participation.xsd");
+            let errors = scheme.validate(raw);
             if (errors)
                 return null;
 

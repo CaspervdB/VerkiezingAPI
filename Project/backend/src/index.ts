@@ -46,6 +46,15 @@ app.post("/participations", createParticipation);
 app.put("/participations", updateParticipation);
 app.delete("/participations/:id", deleteParticipation)
 
+function errorHandler (err : any, req: any, res : any, next : any) {
+    if (res.headersSent) {
+      return next(err)
+    }
+    res.status(500)
+    res.render('error', { error: err })
+  }
+app.use(errorHandler);
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
