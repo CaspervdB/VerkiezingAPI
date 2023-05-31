@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "copy-assets": "xcopy /E /I schemes dist/",
     "build": "tsc",
     "start": "node dist/index.js",
     "start-dev": "nodemon -x ts-node -e ts src",
@@ -16,6 +17,8 @@
     "@types/express": "^4.17.17",
     "@types/uuid": "^9.0.1",
     "@types/xml2js": "^0.4.11",
+    "@types/xmldom": "^0.1.31",
+    "@types/xsd-schema-validator": "^0.5.4",
     "libxmljs2-xsd": "^0.30.1",
     "nodemon": "^2.0.22",
     "ts-node": "^10.9.1",
@@ -25,8 +28,11 @@
     "express": "^4.18.2",
     "express-xml-bodyparser": "^0.3.0",
     "jsonschema": "^1.4.1",
+    "libxmljs": "^1.0.9",
     "mongodb": "^5.3.0",
     "uuid": "^9.0.0",
-    "xml2js": "^0.5.0"
+    "xml2js": "^0.5.0",
+    "xmldom": "^0.6.0",
+    "xsd-schema-validator": "^0.7.0"
   }
 }

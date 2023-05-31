@@ -17,13 +17,14 @@ const jsonschema_1 = __importDefault(require("jsonschema"));
 const uuid_1 = require("uuid");
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
-const schemesPath = path_1.default.join(__dirname, "..", "..", "resources", "schemes", "json");
+const mongodb_1 = require("mongodb");
+const schemesPath = path_1.default.join(__dirname, "..", "schemes", "json");
 exports.jsonValidator = {
     validateElection: (raw) => __awaiter(void 0, void 0, void 0, function* () {
         const v = new jsonschema_1.default.Validator();
         const obj = JSON.parse(raw);
         if (!obj.id)
-            obj.id = (0, uuid_1.v4)();
+            obj.id = new mongodb_1.ObjectId();
         const scheme = JSON.parse(fs_1.default.readFileSync(schemesPath + "/election.json", "utf8"));
         const isValid = v.validate(obj, scheme).valid;
         if (!isValid)

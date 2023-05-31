@@ -28,7 +28,11 @@ const getElection = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     const election = yield (0, election_1.dbGetElection)(id);
     if (!election)
         return res.status(404).send("Election not found.");
-    res.send(election);
+    if (contentTypeIsJson(req)) {
+        res.send(election);
+        return;
+    }
+    res.send((0, xml_js_1.json2xml)(JSON.stringify({ election: election }), { compact: true, spaces: 1 }));
 });
 exports.getElection = getElection;
 const getElections = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -37,25 +41,31 @@ const getElections = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         res.send(allElections);
         return;
     }
-    res.send((0, xml_js_1.json2xml)(JSON.stringify(allElections), { compact: true, spaces: 1 }));
+    res.send((0, xml_js_1.json2xml)(JSON.stringify({ elections: allElections }), { compact: true, spaces: 1 }));
 });
 exports.getElections = getElections;
 const createElection = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    // Check if the content type is specified.
+    // Check if the content type is specified.  
     const contentType = req.headers["content-type"];
     if (!contentType)
         return res.status(400).send("No content type specified.");
     // Check if the content type is supported.
-    const rawBody = req.body.toString();
+    const rawBody = req.body;
     const validator = validators[contentType];
     if (!validator)
         return res.status(400).send("Unsupported content type.");
     // Check if the data structure is valid.
-    let election = yield validator.validateElection(rawBody);
-    if (!election)
-        return res.status(400).send("Invalid data structure.");
-    election = yield (0, election_1.dbCreateElection)(election);
-    res.send(election);
+    yield validator.validateElection(rawBody);
+    res.send(rawBody).status(200);
+    // if (!election)
+    //     return res.status(400).send("Invalid data structure.");
+    // election = await dbCreateElection(election);
+    // if(contentTypeIsJson(req))
+    // {
+    //     res.send(election);
+    //     return;
+    // }
+    // res.send(json2xml(JSON.stringify({ election: election }), { compact: true, spaces: 1}))
 });
 exports.createElection = createElection;
 const updateElection = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -64,16 +74,22 @@ const updateElection = (req, res) => __awaiter(void 0, void 0, void 0, function*
     if (!contentType)
         return res.status(400).send("No content type specified.");
     // Check if the content type is supported.
-    const rawBody = req.body.toString();
+    const rawBody = req.body;
     const validator = validators[contentType];
     if (!validator)
         return res.status(400).send("Unsupported content type.");
     // Check if the data structure is valid.
-    var election = yield validator.validateElection(rawBody);
+    let election = yield validator.validateElection(rawBody);
     if (!election)
         return res.status(400).send("Invalid data structure.");
-    election = yield (0, election_1.dbUpdateElection)(election);
-    res.send(election);
+    res.send(rawBody);
+    // election = await dbUpdateElection(election);
+    // if(contentTypeIsJson(req))
+    // {
+    //     res.send(election);
+    //     return;
+    // }
+    // res.send(json2xml(JSON.stringify({ election: election }), { compact: true, spaces: 1}))
 });
 exports.updateElection = updateElection;
 const deleteElection = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -83,6 +99,13 @@ const deleteElection = (req, res) => __awaiter(void 0, void 0, void 0, function*
     const wasDeleted = yield (0, election_1.dbDeleteElection)(id);
     if (!wasDeleted)
         return res.status(404).send("Election not found.");
-    res.send("Election has been deleted.");
+    const result = {
+        message: "Election deleted"
+    };
+    if (contentTypeIsJson(req)) {
+        res.send(result);
+        return;
+    }
+    res.send((0, xml_js_1.json2xml)(JSON.stringify({ result: result }), { compact: true, spaces: 1 }));
 });
 exports.deleteElection = deleteElection;

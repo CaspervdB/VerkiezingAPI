@@ -4,19 +4,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const body_parser_1 = __importDefault(require("body-parser"));
 const election_1 = require("./controllers/election");
 const party_1 = require("./controllers/party");
 const participations_1 = require("./controllers/participations");
-const xmlparser = require('express-xml-bodyparser');
+const xmlparser = require("express-xml-bodyparser");
 const port = 3000;
 const app = (0, express_1.default)();
-app.use(express_1.default.json());
-app.use(xmlparser());
-// app.use(bodyParser.raw({
-//     type: ["application/json", "application/xml"],
-// }));
+app.use(body_parser_1.default.raw({
+    type: ["application/json", "application/xml"],
+}));
 app.use((req, res, next) => {
-    switch (req.headers['content-type']) {
+    switch (req.headers["content-type"]) {
         case "application/json":
         case "application/xml":
             next();
@@ -26,6 +25,14 @@ app.use((req, res, next) => {
             break;
     }
 });
+// function errorHandler(err: any, req: any, res: any, next: any) {
+//   if (res.headersSent) {
+//     return next(err);
+//   }
+//   res.status(500);
+//   res.render("error", { error: err });
+// }
+// app.use(errorHandler);
 // Routes for election.
 app.get("/elections", election_1.getElections);
 app.get("/elections/:id", election_1.getElection);

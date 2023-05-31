@@ -5,6 +5,8 @@ import { xmlValidator } from "../validators/xml-validator";
 import { jsonValidator } from "../validators/json-validator";
 import { dbCreateElection, dbDeleteElection, dbGetElection, dbGetElections, dbUpdateElection } from "../service/election";
 import { json2xml } from 'xml-js';
+import { ErrorResult } from "../models/error";
+import { Election } from "../models/election";
 
 const validators: { [id: string]: Validator } = {
     "application/json": jsonValidator,
@@ -49,25 +51,24 @@ export const createElection = async (req: Request, res: Response) => {
         return res.status(400).send("No content type specified.");
 
     // Check if the content type is supported.
-    const rawBody = JSON.stringify(req.body);
-    // res.send(rawBody);
-    // return
+    const rawBody = req.body
     const validator = validators[contentType];
     if (!validator)  
         return res.status(400).send("Unsupported content type.");
-
+    
     // Check if the data structure is valid.
-    let election = await validator.validateElection(rawBody);
-    if (!election)
-        return res.status(400).send("Invalid data structure.");
+    await validator.validateElection(rawBody);
+    res.send(rawBody).status(200);
+    // if (!election)
+    //     return res.status(400).send("Invalid data structure.");
 
-    election = await dbCreateElection(election);
-    if(contentTypeIsJson(req))
-    {
-        res.send(election);
-        return;
-    }
-    res.send(json2xml(JSON.stringify({ election: election }), { compact: true, spaces: 1}))
+    // election = await dbCreateElection(election);
+    // if(contentTypeIsJson(req))
+    // {
+    //     res.send(election);
+    //     return;
+    // }
+    // res.send(json2xml(JSON.stringify({ election: election }), { compact: true, spaces: 1}))
 }
 
 export const updateElection = async (req: Request, res: Response) => {

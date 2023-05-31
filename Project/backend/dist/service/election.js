@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.dbDeleteElection = exports.dbUpdateElection = exports.dbCreateElection = exports.dbGetElection = exports.dbGetElections = void 0;
 const mongodb_1 = require("mongodb");
+const election_1 = require("../models/election");
 const dbName = "mydb";
 const url = "mongodb://root:example@localhost:27017/?authSource=admin";
 const dbGetElections = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -20,7 +21,7 @@ const dbGetElections = () => __awaiter(void 0, void 0, void 0, function* () {
     const collection = db.collection("elections");
     const elections = yield collection.find().toArray();
     yield client.close();
-    return elections;
+    return elections.map(x => (0, election_1.mapToElection)(x));
 });
 exports.dbGetElections = dbGetElections;
 const dbGetElection = (id) => __awaiter(void 0, void 0, void 0, function* () {
@@ -28,9 +29,11 @@ const dbGetElection = (id) => __awaiter(void 0, void 0, void 0, function* () {
     yield client.connect();
     const db = client.db(dbName);
     const collection = db.collection("elections");
-    const election = yield collection.findOne({ id });
+    const objectId = new mongodb_1.ObjectId(id);
+    const election = yield collection.findOne({ _id: objectId });
+    let dbModel = !election ? null : Object.assign({}, election);
     yield client.close();
-    return election;
+    return (0, election_1.mapToElection)(dbModel);
 });
 exports.dbGetElection = dbGetElection;
 const dbCreateElection = (election) => __awaiter(void 0, void 0, void 0, function* () {
@@ -38,7 +41,7 @@ const dbCreateElection = (election) => __awaiter(void 0, void 0, void 0, functio
     yield client.connect();
     const db = client.db(dbName);
     const collection = db.collection("elections");
-    yield collection.insertOne(Object.assign({}, election));
+    yield collection.insertOne((0, election_1.mapToDb)(election));
     yield client.close();
     return election;
 });
@@ -49,7 +52,7 @@ const dbUpdateElection = (election) => __awaiter(void 0, void 0, void 0, functio
     const db = client.db(dbName);
     const collection = db.collection("elections");
     console.log(1);
-    yield collection.updateMany({ id: election.id }, { $set: Object.assign({}, election) });
+    yield collection.updateMany({ _id: new mongodb_1.ObjectId(election.id) }, { $set: Object.assign({}, (0, election_1.mapToDb)(election)) });
     console.log(2);
     yield client.close();
     return election;
@@ -60,7 +63,7 @@ const dbDeleteElection = (id) => __awaiter(void 0, void 0, void 0, function* () 
     yield client.connect();
     const db = client.db(dbName);
     const collection = db.collection("elections");
-    const res = yield collection.deleteOne({ id });
+    const res = yield collection.deleteOne({ _id: new mongodb_1.ObjectId(id) });
     yield client.close();
     return res.deletedCount > 0;
 });

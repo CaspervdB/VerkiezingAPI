@@ -6,7 +6,7 @@ import path from "path";
 import { Validator } from "./validator";
 import { ObjectId } from "mongodb";
 
-const schemesPath = path.join(__dirname, "..", "..", "resources", "schemes", "json")
+const schemesPath = path.join(__dirname, "..", "schemes", "json")
 
 export const jsonValidator: Validator = {
 

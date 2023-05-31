@@ -1,4 +1,5 @@
 import { Election } from "../models/election";
+import { ErrorResult } from "../models/error";
 import { Participation } from "../models/participation";
 import { Party } from "../models/party";
 
