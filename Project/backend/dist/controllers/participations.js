@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteParticipation = exports.updateParticipation = exports.createParticipation = exports.getParticipations = exports.getParticipation = void 0;
+exports.deleteParticipation = exports.updateParticipation = exports.createParticipation = exports.getParticipations = exports.getParticipationByElectionId = exports.getParticipation = void 0;
 const xml_validator_1 = require("../validators/xml-validator");
 const json_validator_1 = require("../validators/json-validator");
 const participations_1 = require("../service/participations");
@@ -27,6 +27,16 @@ const getParticipation = (req, res) => __awaiter(void 0, void 0, void 0, functio
     res.send(participation);
 });
 exports.getParticipation = getParticipation;
+const getParticipationByElectionId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.params.id;
+    if (!id)
+        return res.status(400).send("No id specified.");
+    const participation = yield (0, participations_1.dbGetParticipationsByElectionId)(id);
+    if (!participation)
+        return res.status(404).send("Participation not found.");
+    res.send(participation);
+});
+exports.getParticipationByElectionId = getParticipationByElectionId;
 const getParticipations = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.send(yield (0, participations_1.dbGetParticipations)());
 });

@@ -4,7 +4,7 @@
             <xs:sequence>
                 <xs:element name="name" type="xs:string"/>
                 <xs:element name="municipality" type="xs:string"/>
-                <xs:element name="date" type="xs:date"/>
+                <xs:element name="date" type="xs:string"/>
                 <xs:element name="votes" type="xs:integer"/>
                 <xs:element name="id" type="xs:integer"/>
             </xs:sequence>

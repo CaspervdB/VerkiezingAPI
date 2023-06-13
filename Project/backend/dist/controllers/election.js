@@ -45,51 +45,38 @@ const getElections = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 });
 exports.getElections = getElections;
 const createElection = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    // Check if the content type is specified.  
-    const contentType = req.headers["content-type"];
-    if (!contentType)
-        return res.status(400).send("No content type specified.");
-    // Check if the content type is supported.
-    const rawBody = req.body;
-    const validator = validators[contentType];
-    if (!validator)
-        return res.status(400).send("Unsupported content type.");
-    // Check if the data structure is valid.
-    yield validator.validateElection(rawBody);
-    res.send(rawBody).status(200);
+    // // Check if the content type is specified.  
+    // const contentType = req.headers["content-type"];
+    // if (!contentType)
+    //     return res.status(400).send("No content type specified.");
+    // // Check if the content type is supported.
+    // const rawBody = req.body
+    // const validator = validators[contentType];
+    // if (!validator)  
+    //     return res.status(400).send("Unsupported content type.");
+    // // Check if the data structure is valid.
+    // var election = await validator.validateElection(rawBody);
+    // // res.send(rawBody).status(200);
     // if (!election)
     //     return res.status(400).send("Invalid data structure.");
-    // election = await dbCreateElection(election);
-    // if(contentTypeIsJson(req))
-    // {
-    //     res.send(election);
-    //     return;
-    // }
-    // res.send(json2xml(JSON.stringify({ election: election }), { compact: true, spaces: 1}))
+    let election = JSON.parse(req.body);
+    election = yield (0, election_1.dbCreateElection)(election);
+    if (contentTypeIsJson(req)) {
+        res.send(election);
+        return;
+    }
+    res.send((0, xml_js_1.json2xml)(JSON.stringify({ election: election }), { compact: true, spaces: 1 }));
 });
 exports.createElection = createElection;
 const updateElection = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // Check if the content type is specified.
-    const contentType = req.headers["content-type"];
-    if (!contentType)
-        return res.status(400).send("No content type specified.");
-    // Check if the content type is supported.
-    const rawBody = req.body;
-    const validator = validators[contentType];
-    if (!validator)
-        return res.status(400).send("Unsupported content type.");
-    // Check if the data structure is valid.
-    let election = yield validator.validateElection(rawBody);
-    if (!election)
-        return res.status(400).send("Invalid data structure.");
-    res.send(rawBody);
-    // election = await dbUpdateElection(election);
-    // if(contentTypeIsJson(req))
-    // {
-    //     res.send(election);
-    //     return;
-    // }
-    // res.send(json2xml(JSON.stringify({ election: election }), { compact: true, spaces: 1}))
+    let election = JSON.parse(req.body);
+    election = yield (0, election_1.dbUpdateElection)(election);
+    if (contentTypeIsJson(req)) {
+        res.send(election);
+        return;
+    }
+    res.send((0, xml_js_1.json2xml)(JSON.stringify({ election: election }), { compact: true, spaces: 1 }));
 });
 exports.updateElection = updateElection;
 const deleteElection = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

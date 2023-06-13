@@ -9,10 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.dbDeleteParticipation = exports.dbUpdateParticipation = exports.dbCreateParticipation = exports.dbGetParticipation = exports.dbGetParticipations = void 0;
+exports.dbDeleteParticipation = exports.dbUpdateParticipation = exports.dbCreateParticipation = exports.dbGetParticipationsByElectionId = exports.dbGetParticipation = exports.dbGetParticipations = void 0;
 const mongodb_1 = require("mongodb");
 const dbName = "mydb";
-const url = "mongodb://root:password@localhost:27017/?authSource=admin";
+const url = "mongodb://root:example@localhost:27017/?authSource=admin";
 const dbGetParticipations = () => __awaiter(void 0, void 0, void 0, function* () {
     const client = new mongodb_1.MongoClient(url);
     yield client.connect();
@@ -33,6 +33,16 @@ const dbGetParticipation = (id) => __awaiter(void 0, void 0, void 0, function* (
     return participation;
 });
 exports.dbGetParticipation = dbGetParticipation;
+const dbGetParticipationsByElectionId = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const client = new mongodb_1.MongoClient(url);
+    yield client.connect();
+    const db = client.db(dbName);
+    const collection = db.collection("participations");
+    const participation = yield collection.find({ electionId: id }).toArray();
+    yield client.close();
+    return participation;
+});
+exports.dbGetParticipationsByElectionId = dbGetParticipationsByElectionId;
 const dbCreateParticipation = (participation) => __awaiter(void 0, void 0, void 0, function* () {
     const client = new mongodb_1.MongoClient(url);
     yield client.connect();

@@ -29,5 +29,5 @@
             "minimum": 0
         }
     },
-    "required": ["id", "name", "municipality", "date", "votes"]
+    "required": [ "name", "municipality", "date", "votes"]
 }

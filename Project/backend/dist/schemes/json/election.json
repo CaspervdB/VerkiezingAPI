@@ -20,8 +20,7 @@
         },
         "date": {
             "description": "Date of the election",
-            "type": "string",
-            "format": "date"
+            "type": "string"
         },
         "votes": {
             "description": "Total number of votes during the election",
@@ -29,5 +28,5 @@
             "minimum": 0
         }
     },
-    "required": ["id", "name", "municipality", "date", "votes"]
+    "required": [ "name", "municipality", "date", "votes"]
 }

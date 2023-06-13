@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { Validator } from "../validators/validator";
 import { xmlValidator } from "../validators/xml-validator";
 import { jsonValidator } from "../validators/json-validator";
-import { dbCreateParticipation, dbDeleteParticipation, dbGetParticipation, dbGetParticipations, dbUpdateParticipation } from "../service/participations";
+import { dbCreateParticipation, dbDeleteParticipation, dbGetParticipation, dbGetParticipations, dbGetParticipationsByElectionId, dbUpdateParticipation } from "../service/participations";
 
 const validators: { [id: string]: Validator } = {
     "application/json": jsonValidator,
@@ -15,6 +15,15 @@ export const getParticipation = async (req: Request, res: Response) => {
     if (!id)
         return res.status(400).send("No id specified.");
     const participation = await dbGetParticipation(id);
+    if (!participation)
+        return res.status(404).send("Participation not found.");
+    res.send(participation);
+}
+export const getParticipationByElectionId = async (req: Request, res: Response) => {
+    const id = req.params.id;
+    if (!id)
+        return res.status(400).send("No id specified.");
+    const participation = await dbGetParticipationsByElectionId(id);
     if (!participation)
         return res.status(404).send("Participation not found.");
     res.send(participation);

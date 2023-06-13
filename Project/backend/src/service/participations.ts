@@ -2,7 +2,7 @@ import { MongoClient } from "mongodb";
 import { Participation } from "../models/participation";
 
 const dbName = "mydb";
-const url = "mongodb://root:password@localhost:27017/?authSource=admin";
+const url = "mongodb://root:example@localhost:27017/?authSource=admin";
 
 export const dbGetParticipations = async (): Promise<Participation[]> => {
     const client = new MongoClient(url);
@@ -26,6 +26,20 @@ export const dbGetParticipation = async (id: string): Promise<Participation|null
     const collection = db.collection<Participation>("participations");
 
     const participation = await collection.findOne({ id });
+
+    await client.close();
+
+    return participation;    
+}
+
+export const dbGetParticipationsByElectionId = async (id: string): Promise<Participation[]|null> => {
+    const client = new MongoClient(url);
+    await client.connect();
+
+    const db = client.db(dbName);
+    const collection = db.collection<Participation>("participations");
+
+    const participation = await collection.find({ electionId: id }).toArray();
 
     await client.close();
 
