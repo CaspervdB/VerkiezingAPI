@@ -1,13 +1,26 @@
-// import { Link , Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
+import "./JsonPage.css";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
+let randomBackgroundColor = [];
+let usedColors = new Set();
 
-const randColor = () => {
-  return Math.floor(Math.random() * (255 - 1 + 1) + 1)
-}
+let dynamicColors = function () {
+  let r = Math.floor(Math.random() * 255);
+  let g = Math.floor(Math.random() * 255);
+  let b = Math.floor(Math.random() * 255);
+  let color = "rgb(" + r + "," + g + "," + b + ")";
+
+  if (!usedColors.has(color)) {
+    usedColors.add(color);
+    return color;
+  } else {
+    return dynamicColors();
+  }
+};
+
 const getRequest = async (path) => {
   try {
     const res = await fetch("http://localhost:3000/" + path, {
@@ -47,12 +60,15 @@ export const JsonPage = () => {
       .finally(() => {
         setIsLoading(false);
       });
-    return () => {};
+    return () => { };
   }, []);
 
   useEffect(() => {
     console.log(elections);
-    return () => {};
+    for (let i in elections) {
+      randomBackgroundColor.push(dynamicColors());
+    }
+    return () => { };
   }, [elections]);
 
   useEffect(() => {
@@ -60,7 +76,6 @@ export const JsonPage = () => {
       setParticipants(null);
       getRequest(`participations/election/${electionId}`).then((res) => {
         if (res != null) {
-          // setParticipants(res);
           const data = {
             labels: res.map(x => x.name),
             datasets: [
@@ -68,7 +83,7 @@ export const JsonPage = () => {
                 label: "# of Votes",
                 data: res.map(x => Number(x.votes)),
                 borderWidth: 1,
-                backgroundColor: res.map(x => `rgba(255,${randColor},${randColor},0.3)`)
+                backgroundColor: randomBackgroundColor,
               }
             ]
           }
@@ -77,7 +92,7 @@ export const JsonPage = () => {
         }
       });
     }
-    return () => {};
+    return () => { };
   }, [electionId]);
 
   const selectElection = (electionId) => {
@@ -97,7 +112,9 @@ export const JsonPage = () => {
       {!isLoading && elections.length <= 0 && (
         <div>No elections to be shown!</div>
       )}
-      {participants != null && <Pie height={10} width={10} data={participants} />}
+      <div class="chart-container">
+        {participants != null && <Pie data={participants} />}
+      </div>
     </div>
   );
 };

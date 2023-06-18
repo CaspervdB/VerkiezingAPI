@@ -40,11 +40,11 @@ const port = 3000;
 const app = (0, express_1.default)();
 const validator = new jsonschema_1.Validator();
 // Load the schema file
-const electionSchema = JSON.parse(fs.readFileSync(__dirname + '\\schemes\\json\\election.json', "utf8"));
-const allowlist = ['http://localhost:3001'];
-var corsOptionsDelegate = function (req, callback) {
-    var corsOptions;
-    if (allowlist.indexOf(req.header('Origin')) !== -1) {
+const electionSchema = JSON.parse(fs.readFileSync(__dirname + "\\schemes\\json\\election.json", "utf8"));
+const allowlist = ["http://localhost:3001"];
+let corsOptionsDelegate = function (req, callback) {
+    let corsOptions;
+    if (allowlist.indexOf(req.header("Origin")) !== -1) {
         corsOptions = { origin: true }; // reflect (enable) the requested origin in the CORS response
     }
     else {
@@ -83,6 +83,8 @@ app.use((req, res, next) => {
             break;
     }
 });
+app.use(xmlparser());
+// Routes for election.
 app.get("/elections", election_1.getElections);
 app.get("/elections/:id", election_1.getElection);
 app.post("/elections", validateSchema(electionSchema), election_1.createElection);

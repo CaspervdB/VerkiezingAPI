@@ -1,5 +1,4 @@
-
 export interface Party {
-    id: string;
-    name: string;
+  id: string;
+  name: string;
 }

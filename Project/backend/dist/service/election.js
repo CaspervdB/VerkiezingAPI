@@ -21,7 +21,7 @@ const dbGetElections = () => __awaiter(void 0, void 0, void 0, function* () {
     const collection = db.collection("elections");
     const elections = yield collection.find().toArray();
     yield client.close();
-    return elections.map(x => (0, election_1.mapToElection)(x));
+    return elections.map((x) => (0, election_1.mapToElection)(x));
 });
 exports.dbGetElections = dbGetElections;
 const dbGetElection = (id) => __awaiter(void 0, void 0, void 0, function* () {

@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.dbDeleteParty = exports.dbUpdateParty = exports.dbCreateParty = exports.dbGetParty = exports.dbGetPartys = void 0;
 const mongodb_1 = require("mongodb");
+const party_1 = require("../models/party");
 const dbName = "mydb";
 const url = "mongodb://root:example@localhost:27017/?authSource=admin";
 const dbGetPartys = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -20,7 +21,7 @@ const dbGetPartys = () => __awaiter(void 0, void 0, void 0, function* () {
     const collection = db.collection("partys");
     const partys = yield collection.find().toArray();
     yield client.close();
-    return partys;
+    return partys.map((x) => (0, party_1.mapToParty)(x));
 });
 exports.dbGetPartys = dbGetPartys;
 const dbGetParty = (id) => __awaiter(void 0, void 0, void 0, function* () {

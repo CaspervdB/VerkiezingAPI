@@ -23,39 +23,37 @@ import {
   getParticipations,
   updateParticipation,
 } from "./controllers/participations";
-import path from 'path';
 import { Validator } from "jsonschema";
-import * as fs from 'fs';
+import * as fs from "fs";
 import { ObjectId } from "mongodb";
 
 const xmlparser = require("express-xml-bodyparser");
 const port = 3000;
 const app = express();
-
-
 const validator = new Validator();
 // Load the schema file
-const electionSchema = JSON.parse(fs.readFileSync(__dirname + '\\schemes\\json\\election.json', "utf8"));
+const electionSchema = JSON.parse(
+  fs.readFileSync(__dirname + "\\schemes\\json\\election.json", "utf8")
+);
 
-const allowlist = ['http://localhost:3001']
+const allowlist = ["http://localhost:3001"];
 
-var corsOptionsDelegate = function (req: any, callback: any) {
-  var corsOptions;
-  if (allowlist.indexOf(req.header('Origin')) !== -1) {
-    corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
+let corsOptionsDelegate = function (req: any, callback: any) {
+  let corsOptions;
+  if (allowlist.indexOf(req.header("Origin")) !== -1) {
+    corsOptions = { origin: true }; // reflect (enable) the requested origin in the CORS response
   } else {
-    corsOptions = { origin: false } // disable CORS for this request
+    corsOptions = { origin: false }; // disable CORS for this request
   }
-  callback(null, corsOptions) // callback expects two parameters: error and options
-}
+  callback(null, corsOptions); // callback expects two parameters: error and options
+};
 
 // Create a middleware to validate the request against the schema
 function validateSchema(schema: any) {
   return (req: any, res: any, next: any) => {
     let obj = JSON.parse(req.body);
 
-    if(!obj.id)
-    {
+    if (!obj.id) {
       obj.id = new ObjectId().toString();
     }
     const body = JSON.stringify(obj);
@@ -67,7 +65,6 @@ function validateSchema(schema: any) {
     next();
   };
 }
-
 
 app.use(cors(corsOptionsDelegate));
 app.use(
@@ -87,9 +84,12 @@ app.use((req, res, next) => {
   }
 });
 
+app.use(xmlparser());
+
+// Routes for election.
 app.get("/elections", getElections);
 app.get("/elections/:id", getElection);
-app.post("/elections", validateSchema(electionSchema) , createElection);
+app.post("/elections", validateSchema(electionSchema), createElection);
 app.put("/elections", validateSchema(electionSchema), updateElection);
 app.delete("/elections/:id", deleteElection);
 
