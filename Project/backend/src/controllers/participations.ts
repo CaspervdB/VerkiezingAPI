@@ -10,7 +10,7 @@ import {
   dbGetParticipationsByElectionId,
   dbUpdateParticipation,
 } from "../service/participations";
-import { json2xml } from "xml-js";
+import { toXML } from "jstoxml";
 
 const validators: { [id: string]: Validator } = {
   "application/json": jsonValidator,
@@ -31,9 +31,8 @@ const contentTypeHandler = (
     return;
   }
   res.send(
-    json2xml(JSON.stringify({ participation: participation }), {
-      compact: true,
-      spaces: 1,
+    toXML(participation, {
+      indent: "  ",
     })
   );
 };
@@ -63,10 +62,14 @@ export const getParticipations = async (req: Request, res: Response) => {
     return;
   }
   res.send(
-    json2xml(JSON.stringify({ participation: allParticipations }), {
-      compact: true,
-      spaces: 1,
-    })
+    toXML(
+      {
+        ...allParticipations,
+      },
+      {
+        indent: "  ",
+      }
+    )
   );
 };
 

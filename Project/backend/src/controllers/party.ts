@@ -10,7 +10,7 @@ import {
   dbGetPartys,
   dbUpdateParty,
 } from "../service/party";
-import { json2xml } from "xml-js";
+import { toXML } from "jstoxml";
 
 const validators: { [id: string]: Validator } = {
   "application/json": jsonValidator,
@@ -27,9 +27,8 @@ const contentTypeHandler = (req: Request, res: Response, party: any) => {
     return;
   }
   res.send(
-    json2xml(JSON.stringify({ party: party }), {
-      compact: true,
-      spaces: 1,
+    toXML(party, {
+      indent: "  ",
     })
   );
 };

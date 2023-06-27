@@ -9,7 +9,7 @@ import {
   dbGetElections,
   dbUpdateElection,
 } from "../service/election";
-import { json2xml } from "xml-js";
+import { toXML } from "jstoxml";
 
 const validators: { [id: string]: Validator } = {
   "application/json": jsonValidator,
@@ -26,9 +26,8 @@ const contentTypeHandler = (req: Request, res: Response, election: any) => {
     return;
   }
   res.send(
-    json2xml(JSON.stringify({ election: election }), {
-      compact: true,
-      spaces: 1,
+    toXML(election, {
+      indent: "  ",
     })
   );
 };
@@ -49,10 +48,14 @@ export const getElections = async (req: Request, res: Response) => {
   }
 
   res.send(
-    json2xml(JSON.stringify({ elections: allElections }), {
-      compact: true,
-      spaces: 1,
-    })
+    toXML(
+      {
+        ...allElections,
+      },
+      {
+        indent: "  ",
+      }
+    )
   );
 };
 
@@ -99,6 +102,13 @@ export const deleteElection = async (req: Request, res: Response) => {
     return;
   }
   res.send(
-    json2xml(JSON.stringify({ result: result }), { compact: true, spaces: 1 })
+    toXML(
+      {
+        ...result,
+      },
+      {
+        indent: "  ",
+      }
+    )
   );
 };

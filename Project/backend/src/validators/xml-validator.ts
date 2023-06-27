@@ -1,4 +1,4 @@
-import xsd from "libxmljs2-xsd";
+let xsd = require("libxmljs2-xsd");
 import xml2js from "xml2js";
 import { Validator } from "./validator";
 import path from "path";
